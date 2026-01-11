@@ -23,8 +23,11 @@ Both versions are already available in your ECR repository:
 
 ```bash
 # Deploy the application
-kubectl apply -f deployment.yml
-kubectl apply -f service.yml
+kubectl apply -f argocd-demo/deployment.yml
+kubectl apply -f argocd-demo/service.yml
+
+# Or apply all files in the folder
+kubectl apply -f argocd-demo/
 
 # Check deployment status
 kubectl get pods
@@ -42,7 +45,7 @@ Since you already have ArgoCD running on EKS, create the application using one o
    - **Application Name**: `argocd-demo`
    - **Project**: `default`
    - **Repository URL**: Your Git repository URL
-   - **Path**: `.` (root directory)
+   - **Path**: `argocd-demo` (folder containing manifests)
    - **Cluster URL**: `https://kubernetes.default.svc`
    - **Namespace**: `default`
 4. Enable **Auto-Sync** and **Self Heal**
@@ -52,7 +55,7 @@ Since you already have ArgoCD running on EKS, create the application using one o
 ```bash
 argocd app create argocd-demo \
   --repo https://github.com/YOUR_USERNAME/YOUR_REPO \
-  --path . \
+  --path argocd-demo \
   --dest-server https://kubernetes.default.svc \
   --dest-namespace default \
   --sync-policy automated \
@@ -79,7 +82,9 @@ To test ArgoCD automatic sync:
    git push
    ```
 
-3. **Watch ArgoCD sync** - ArgoCD will automatically detect the change and deploy v2
+3. **Test ArgoCD sync** - ArgoCD will automatically detect the change and deploy v2
+
+   **Note**: The manifests are now in the `argocd-demo/` folder, so make sure to update the image tag in `argocd-demo/deployment.yml`
 
 ### 5. Rebuild Images (if needed)
 
