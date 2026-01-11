@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argocd-demo
+  labels:
+    app: argocd-demo
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: argocd-demo
+  template:
+    metadata:
+      labels:
+        app: argocd-demo
+    spec:
+      containers:
+      - name: argocd-demo
+        image: public.ecr.aws/a8f2g6a2/argo-eks-demo:v1
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5

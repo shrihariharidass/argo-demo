@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: argocd-demo-service
+  labels:
+    app: argocd-demo
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+  selector:
+    app: argocd-demo
