@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: argocd-demo
-        image: public.ecr.aws/a8f2g6a2/argo-eks-demo:v1-test
+        image: public.ecr.aws/a8f2g6a2/argo-eks-demo:v1-1768109177
         imagePullPolicy: Always
         ports:
         - containerPort: 80
